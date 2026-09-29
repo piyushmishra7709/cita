@@ -1,0 +1,495 @@
+/* =========================================================
+   CITA Bharat EV — shared site styles
+   1. Header + menu (desktop dropdowns, mobile drawer)
+   2. Category landing pages (Products / AC / DC / Solutions)
+   3. Global responsive safety fixes for the WordPress/Elementor pages
+   ========================================================= */
+
+:root {
+  --cita-blue: #046bd2;
+  --cita-blue-dark: #045cb4;
+  --cita-ink: #1e293b;
+  --cita-text: #334155;
+  --cita-line: #e2e8f0;
+  --cita-bg: #f0f5fa;
+  --cita-green: #00a85f;
+  --cita-wa: #25d366;
+  --cita-header-h: 72px;
+}
+
+/* ---------- 1. HEADER ---------- */
+.cita-header {
+  position: sticky;
+  top: 0;
+  z-index: 9990;
+  background: #fff;
+  box-shadow: 0 1px 0 rgba(15, 23, 42, 0.08);
+  transition: box-shadow 0.2s ease;
+  font-family: Inter, "Segoe UI", system-ui, -apple-system, Roboto, Arial, sans-serif;
+  line-height: 1.3;
+}
+.cita-header.is-scrolled { box-shadow: 0 6px 22px rgba(15, 23, 42, 0.12); }
+.cita-header *, .cita-header *::before, .cita-header *::after { box-sizing: border-box; }
+.cita-header a { text-decoration: none; }
+.cita-header ul { list-style: none; margin: 0; padding: 0; }
+
+.cita-bar {
+  max-width: 1440px;
+  margin: 0 auto;
+  height: var(--cita-header-h);
+  padding: 0 20px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+.cita-logo { display: inline-flex; flex: 0 0 auto; align-items: center; }
+.cita-logo img { display: block; height: 44px; width: auto; max-width: 100%; }
+
+.cita-nav {
+  flex: 1 1 auto;
+  min-width: 0;
+  display: flex;
+  justify-content: center;
+}
+.cita-nav__head, .cita-nav__foot { display: none; }
+
+.cita-menu { display: flex; align-items: center; gap: 0; }
+.cita-menu > li { position: relative; display: flex; align-items: center; }
+
+.cita-menu > li > a {
+  display: block;
+  padding: 10px 8px;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--cita-ink);
+  white-space: nowrap;
+  border-radius: 8px;
+  transition: color 0.15s ease, background 0.15s ease;
+}
+.cita-menu > li > a:hover,
+.cita-menu > li.is-open > a,
+.cita-menu > li.is-active > a { color: var(--cita-blue); }
+.cita-menu > li.is-active > a { font-weight: 600; }
+
+.cita-caret {
+  appearance: none;
+  -webkit-appearance: none;
+  background: transparent;
+  border: 0;
+  margin: 0 2px 0 -4px;
+  padding: 0;
+  width: 22px;
+  height: 30px;
+  cursor: pointer;
+  color: var(--cita-ink);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 6px;
+}
+.cita-caret svg { width: 12px; height: 12px; transition: transform 0.2s ease; }
+li.is-open > .cita-caret svg { transform: rotate(180deg); }
+.cita-caret:hover { color: var(--cita-blue); }
+
+.cita-sub {
+  position: absolute;
+  top: calc(100% + 4px);
+  left: 50%;
+  min-width: 250px;
+  background: #fff;
+  border: 1px solid var(--cita-line);
+  border-radius: 14px;
+  box-shadow: 0 18px 40px rgba(15, 23, 42, 0.14);
+  padding: 8px;
+  opacity: 0;
+  visibility: hidden;
+  transform: translate(-50%, 8px);
+  transition: opacity 0.18s ease, transform 0.18s ease, visibility 0s linear 0.18s;
+}
+/* last dropdowns open towards the left so they never leave the screen */
+.cita-menu > li:nth-last-child(-n + 3) > .cita-sub { left: auto; right: 0; transform: translate(0, 8px); }
+
+li.is-open > .cita-sub {
+  opacity: 1;
+  visibility: visible;
+  transform: translate(-50%, 0);
+  transition-delay: 0s;
+}
+.cita-menu > li:nth-last-child(-n + 3).is-open > .cita-sub { transform: translate(0, 0); }
+
+@media (hover: hover) and (min-width: 1280px) {
+  .cita-menu > li:hover > .cita-sub,
+  .cita-menu > li:focus-within > .cita-sub {
+    opacity: 1;
+    visibility: visible;
+    transform: translate(-50%, 0);
+    transition-delay: 0s;
+  }
+  .cita-menu > li:nth-last-child(-n + 3):hover > .cita-sub,
+  .cita-menu > li:nth-last-child(-n + 3):focus-within > .cita-sub { transform: translate(0, 0); }
+  .cita-menu > li:hover > .cita-caret svg { transform: rotate(180deg); }
+}
+
+.cita-sub a {
+  display: block;
+  padding: 10px 14px;
+  border-radius: 9px;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--cita-ink);
+  white-space: nowrap;
+}
+.cita-sub a:hover { background: var(--cita-bg); color: var(--cita-blue); }
+.cita-sub a[aria-current="page"] { background: var(--cita-bg); color: var(--cita-blue); font-weight: 600; }
+
+/* right side buttons */
+.cita-actions { display: flex; align-items: center; gap: 10px; flex: 0 0 auto; }
+.cita-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 42px;
+  padding: 0 18px;
+  border-radius: 999px;
+  font-size: 14px;
+  font-weight: 600;
+  color: #fff !important;
+  background: var(--cita-blue);
+  border: 0;
+  cursor: pointer;
+  transition: background 0.15s ease, transform 0.15s ease;
+  white-space: nowrap;
+}
+.cita-btn:hover { background: var(--cita-blue-dark); }
+.cita-btn--wa { background: var(--cita-wa); padding: 0; width: 42px; }
+.cita-btn--wa:hover { background: #1ebe5b; }
+.cita-btn--wa svg { width: 22px; height: 22px; fill: #fff; }
+.cita-btn--wa .cita-btn__label { display: none; }
+
+.cita-burger {
+  display: none;
+  appearance: none;
+  -webkit-appearance: none;
+  width: 44px;
+  height: 44px;
+  margin-right: -8px;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px;
+  color: var(--cita-ink);
+}
+.cita-burger svg { width: 26px; height: 26px; }
+.cita-overlay { display: none; }
+
+/* keyboard focus */
+.cita-header a:focus-visible,
+.cita-header button:focus-visible { outline: 2px solid var(--cita-blue); outline-offset: 2px; }
+
+/* ---------- Tablet + mobile: drawer menu ---------- */
+@media (max-width: 1279.98px) {
+  :root { --cita-header-h: 64px; }
+  .cita-bar { padding: 0 16px; }
+  .cita-logo img { height: 38px; }
+  .cita-burger { display: inline-flex; }
+  .cita-actions .cita-btn--quote { display: none; }
+  .cita-actions { margin-left: auto; }
+
+  .cita-overlay {
+    display: block;
+    position: fixed;
+    inset: 0;
+    background: rgba(15, 23, 42, 0.55);
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.25s ease, visibility 0s linear 0.25s;
+    z-index: 1;
+  }
+  body.cita-nav-open .cita-overlay { opacity: 1; visibility: visible; transition-delay: 0s; }
+
+  .cita-nav {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 2;
+    width: min(90vw, 380px);
+    background: #fff;
+    flex-direction: column;
+    justify-content: flex-start;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior: contain;
+    transform: translateX(105%);
+    visibility: hidden;
+    transition: transform 0.28s ease, visibility 0s linear 0.28s;
+    box-shadow: -18px 0 40px rgba(15, 23, 42, 0.18);
+  }
+  body.cita-nav-open .cita-nav { transform: none; visibility: visible; transition-delay: 0s; }
+  body.cita-nav-open { overflow: hidden; }
+
+  .cita-nav__head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 16px 12px 20px;
+    border-bottom: 1px solid var(--cita-line);
+    position: sticky;
+    top: 0;
+    background: #fff;
+    z-index: 1;
+  }
+  .cita-nav__title { font-size: 13px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: #64748b; }
+  .cita-close {
+    appearance: none;
+    -webkit-appearance: none;
+    width: 44px;
+    height: 44px;
+    border: 0;
+    background: var(--cita-bg);
+    border-radius: 50%;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--cita-ink);
+  }
+  .cita-close svg { width: 20px; height: 20px; }
+
+  .cita-menu { flex-direction: column; align-items: stretch; width: 100%; padding: 8px 12px; }
+  .cita-menu > li { flex-wrap: wrap; border-bottom: 1px solid #edf1f6; }
+  .cita-menu > li:last-child { border-bottom: 0; }
+  .cita-menu > li > a { flex: 1 1 0; min-width: 0; padding: 15px 8px; font-size: 16px; }
+  .cita-caret { width: 48px; height: 48px; margin: 0; }
+  .cita-caret svg { width: 15px; height: 15px; }
+
+  .cita-sub,
+  .cita-menu > li:nth-last-child(-n + 3) > .cita-sub {
+    position: static;
+    display: none;
+    width: 100%;
+    min-width: 0;
+    opacity: 1;
+    visibility: visible;
+    transform: none;
+    border: 0;
+    box-shadow: none;
+    background: var(--cita-bg);
+    border-radius: 12px;
+    margin: 0 0 10px;
+    padding: 6px;
+  }
+  li.is-open > .cita-sub,
+  .cita-menu > li:nth-last-child(-n + 3).is-open > .cita-sub { display: block; transform: none; }
+  .cita-sub a { white-space: normal; padding: 12px 14px; font-size: 15px; }
+
+  .cita-nav__foot {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 12px 20px 28px;
+    margin-top: auto;
+  }
+  .cita-nav__foot .cita-btn { width: 100%; min-height: 48px; font-size: 15px; }
+  .cita-nav__foot .cita-btn--wa { width: 100%; padding: 0 18px; }
+  .cita-nav__foot .cita-btn--wa .cita-btn__label { display: inline; }
+  .cita-nav__call { text-align: center; font-size: 14px; color: var(--cita-text); }
+  .cita-nav__call a { color: var(--cita-blue); font-weight: 600; }
+}
+@media (max-width: 380px) {
+  .cita-logo img { height: 34px; }
+  .cita-bar { gap: 10px; }
+}
+@media (min-width: 1500px) {
+  .cita-menu > li > a { padding: 10px 12px; font-size: 14.5px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .cita-header *, .cita-nav, .cita-overlay { transition: none !important; }
+}
+
+/* ---------- 2. LANDING PAGES ---------- */
+.cita-landing { color: var(--cita-text); font-family: Inter, "Segoe UI", system-ui, -apple-system, Roboto, Arial, sans-serif; background: #fff; }
+.cita-landing * { box-sizing: border-box; }
+.cita-hero {
+  background: linear-gradient(135deg, #062c59 0%, #046bd2 100%);
+  color: #fff;
+  padding: 64px 20px 56px;
+  text-align: center;
+}
+.cita-hero__in { max-width: 820px; margin: 0 auto; }
+.cita-crumbs { font-size: 13px; opacity: 0.85; margin-bottom: 14px; }
+.cita-crumbs a { color: #fff; text-decoration: underline; text-underline-offset: 3px; }
+.cita-hero h1 { margin: 0 0 14px; font-size: clamp(28px, 5vw, 46px); line-height: 1.12; font-weight: 700; color: #fff; }
+.cita-hero p { margin: 0 auto; max-width: 640px; font-size: clamp(15px, 2.2vw, 18px); line-height: 1.6; opacity: 0.92; color: #fff; }
+.cita-hero__cta { display: flex; flex-wrap: wrap; gap: 12px; justify-content: center; margin-top: 26px; }
+.cita-hero .cita-btn { min-height: 46px; padding: 0 24px; }
+.cita-hero .cita-btn--ghost { background: transparent; box-shadow: inset 0 0 0 2px rgba(255, 255, 255, 0.7); }
+.cita-hero .cita-btn--ghost:hover { background: rgba(255, 255, 255, 0.12); }
+.cita-hero .cita-btn--wa { width: auto; padding: 0 22px; }
+.cita-hero .cita-btn--wa .cita-btn__label { display: inline; }
+.cita-hero .cita-btn--primary { background: #fff; color: var(--cita-blue) !important; }
+.cita-hero .cita-btn--primary:hover { background: #eaf3ff; }
+
+.cita-section { max-width: 1200px; margin: 0 auto; padding: 48px 20px; }
+.cita-section h2 { margin: 0 0 8px; font-size: clamp(22px, 3.4vw, 32px); color: var(--cita-ink); line-height: 1.2; }
+.cita-section > p.cita-lead { margin: 0 0 26px; font-size: 16px; line-height: 1.6; max-width: 720px; }
+.cita-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 260px), 1fr)); gap: 22px; }
+
+.cita-card {
+  display: flex;
+  flex-direction: column;
+  background: #fff;
+  border: 1px solid var(--cita-line);
+  border-radius: 18px;
+  overflow: hidden;
+  color: inherit;
+  text-decoration: none;
+  transition: transform 0.18s ease, box-shadow 0.18s ease, border-color 0.18s ease;
+}
+.cita-card:hover { transform: translateY(-4px); box-shadow: 0 16px 34px rgba(15, 23, 42, 0.12); border-color: #bcd6f3; }
+.cita-card__img {
+  aspect-ratio: 4 / 3;
+  background: var(--cita-bg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 18px;
+}
+.cita-card__img img { max-width: 100%; max-height: 100%; width: auto; height: auto; object-fit: contain; display: block; }
+.cita-card__body { padding: 18px 20px 22px; display: flex; flex-direction: column; gap: 8px; flex: 1; }
+.cita-card__tag { font-size: 12px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--cita-green); }
+.cita-card h3 { margin: 0; font-size: 19px; line-height: 1.25; color: var(--cita-ink); }
+.cita-card p { margin: 0; font-size: 14.5px; line-height: 1.55; color: var(--cita-text); }
+.cita-card__more { margin-top: auto; padding-top: 6px; font-size: 14px; font-weight: 600; color: var(--cita-blue); }
+.cita-card__more::after { content: " \2192"; }
+
+.cita-band { background: var(--cita-bg); }
+.cita-band .cita-section { text-align: center; }
+.cita-band .cita-hero__cta { margin-top: 18px; }
+
+@media (max-width: 767.98px) {
+  .cita-hero { padding: 44px 16px 40px; }
+  .cita-section { padding: 36px 16px; }
+  .cita-grid { gap: 16px; }
+  .cita-hero__cta .cita-btn { flex: 1 1 100%; }
+}
+
+/* ---------- 3. GLOBAL RESPONSIVE SAFETY (WordPress / Elementor pages) ---------- */
+html { -webkit-text-size-adjust: 100%; overflow-x: hidden; }
+body { overflow-x: clip; }
+#page, #content, .site-content, .ast-container { max-width: 100%; }
+#content img, #content video, #content iframe, #content canvas { max-width: 100%; }
+#content img { height: auto; }
+.elementor-widget-container, .elementor-heading-title, .elementor-widget-text-editor { overflow-wrap: anywhere; }
+.elementor-widget-text-editor table, #content table { max-width: 100%; }
+@media (max-width: 767.98px) {
+  #content table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+  .elementor-button { white-space: normal; }
+  .elementor-button-wrapper .elementor-button { max-width: 100%; }
+  .site-content .ast-container { padding-left: 0; padding-right: 0; }
+}
+
+/* carousels: let Swiper recalculate widths itself */
+.swiper-wrapper { max-width: none; }
+.elementor-main-swiper, .swiper { max-width: 100%; }
+
+/* filterable gallery: stack cleanly on small screens instead of absolute-positioned desktop layout */
+@media (max-width: 767.98px) {
+  .eael-filter-gallery-container { height: auto !important; display: flex; flex-wrap: wrap; gap: 10px; }
+  .eael-filterable-gallery-item-wrap {
+    position: static !important;
+    transform: none !important;
+    width: calc(50% - 5px) !important;
+    left: auto !important;
+    top: auto !important;
+  }
+  .eael-filterable-gallery-item-wrap img { width: 100%; height: auto; }
+}
+@media (max-width: 479.98px) {
+  .eael-filterable-gallery-item-wrap { width: 100% !important; }
+}
+
+/* forms */
+.fluentform .ff-el-input--content input,
+.fluentform .ff-el-input--content select,
+.fluentform .ff-el-input--content textarea { max-width: 100%; }
+.fluentform .iti { width: 100%; }
+.iti__country-list { max-width: calc(100vw - 32px); white-space: normal; }
+@media (max-width: 767.98px) {
+  .fluentform .ff-t-container { flex-direction: column; gap: 0; }
+  .fluentform .ff-t-cell { width: 100% !important; padding: 0 !important; }
+  .fluentform input, .fluentform select, .fluentform textarea { font-size: 16px; } /* stops iOS zoom-on-focus */
+}
+
+/* floating WhatsApp widget + scroll-to-top: keep on-screen and clear of each other */
+.wa__widget_container .wa__popup_chat_box { max-width: calc(100vw - 24px); }
+@media (max-width: 767.98px) {
+  .wa__btn_popup { right: 16px !important; bottom: 16px !important; }
+  .wa__btn_popup_txt { display: none !important; }
+  .wa__popup_chat_box { right: 12px !important; bottom: 84px !important; width: calc(100vw - 24px) !important; }
+  #ast-scroll-top { display: none !important; }
+}
+
+/* ---------- 4. Floating WhatsApp button (plain HTML, replaces the old WordPress plugin) ---------- */
+.cita-wa-float {
+  position: fixed;
+  right: 20px;
+  bottom: 20px;
+  z-index: 9980;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  height: 56px;
+  padding: 0 20px 0 16px;
+  border-radius: 999px;
+  background: #25d366;
+  color: #fff !important;
+  font: 600 15px/1 Inter, "Segoe UI", system-ui, Arial, sans-serif;
+  text-decoration: none;
+  box-shadow: 0 10px 26px rgba(0, 0, 0, 0.25);
+  transition: transform 0.15s ease, background 0.15s ease;
+}
+.cita-wa-float:hover { background: #1ebe5b; transform: translateY(-2px); }
+.cita-wa-float svg { width: 26px; height: 26px; fill: #fff; flex: 0 0 auto; }
+#ast-scroll-top { bottom: 90px !important; right: 24px !important; }
+@media (max-width: 767.98px) {
+  .cita-wa-float { right: 14px; bottom: 14px; width: 56px; padding: 0; justify-content: center; }
+  .cita-wa-float span { display: none; }
+}
+
+/* landing pages: full-bleed inside the Astra shell */
+.site-content.cita-full > .ast-container { display: block; max-width: none; padding: 0; }
+.cita-full #primary { display: none; }
+
+/* ---------- 5. Theme-proofing: the Astra theme styles every <button>/<a>; keep our controls immune ---------- */
+.cita-header .cita-caret,
+.cita-header .cita-burger,
+.cita-header .cita-close {
+  background: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+  padding: 0 !important;
+  margin-top: 0 !important;
+  margin-bottom: 0 !important;
+  line-height: 1 !important;
+  color: var(--cita-ink) !important;
+  text-transform: none !important;
+}
+.cita-header .cita-close { background: var(--cita-bg) !important; border-radius: 50% !important; }
+.cita-header .cita-caret:hover,
+.cita-header .cita-caret:focus,
+.cita-header .cita-menu > li.is-open > .cita-caret { color: var(--cita-blue) !important; background: transparent !important; }
+.cita-header .cita-burger:hover, .cita-header .cita-burger:focus { background: var(--cita-bg) !important; }
+.cita-header .cita-caret svg, .cita-header .cita-burger svg, .cita-header .cita-close svg { stroke: currentColor; }
+.cita-header .cita-menu a, .cita-header .cita-sub a { text-decoration: none !important; }
+.cita-landing a, .cita-landing a:hover { text-decoration: none; }
+.cita-landing .cita-crumbs a { text-decoration: underline; }
+.cita-landing .cita-btn, .cita-landing .cita-btn:hover { color: #fff; }
+.cita-landing .cita-hero .cita-btn--primary { color: var(--cita-blue) !important; }
+.cita-header .cita-btn, .cita-header .cita-btn:hover, .cita-wa-float, .cita-wa-float:hover { text-decoration: none !important; }
+
+/* anchor jumps (e.g. "Get A Quote" -> #form) land below the sticky header */
+html { scroll-padding-top: calc(var(--cita-header-h) + 12px); }
