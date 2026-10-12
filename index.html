@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Citabharat EV | New website coming soon</title>
+<meta name="description" content="Citabharat EV is upgrading its website. For EV charger enquiries, write to sales@citabharatev.com or call +91 70204 04346.">
+<link rel="icon" href="https://citaevcharger.in/wp-content/uploads/2026/03/cropped-CITA-EV-LOGO-Favicon-32x32.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --saffron:#f7931e;
+  --blue:#046bd2;
+  --blue-dark:#062c59;
+  --green:#00a85f;
+  --bg:#f0f5fa;
+  --ink:#1e293b;
+  --muted:#475569;
+  --line:#d9e3ee;
+  --font:"Sora",system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{height:100%}
+body{
+  min-height:100%;
+  font-family:var(--font);
+  color:var(--ink);
+  background:var(--bg);
+  display:flex;
+  flex-direction:column;
+  -webkit-font-smoothing:antialiased;
+}
+/* faint grid, like a charging-station layout drawing */
+body::before{
+  content:"";position:fixed;inset:0;z-index:0;pointer-events:none;
+  background-image:
+    linear-gradient(to right,rgba(4,107,210,.06) 1px,transparent 1px),
+    linear-gradient(to bottom,rgba(4,107,210,.06) 1px,transparent 1px);
+  background-size:48px 48px;
+  mask-image:radial-gradient(ellipse at 30% 40%,#000 20%,transparent 75%);
+  -webkit-mask-image:radial-gradient(ellipse at 30% 40%,#000 20%,transparent 75%);
+}
+header,main,footer{position:relative;z-index:1}
+
+header{padding:28px clamp(20px,5vw,64px)}
+.logo{display:inline-block;line-height:0}
+.logo svg{height:52px;width:auto;display:block}
+
+main{
+  flex:1;
+  display:flex;
+  align-items:center;
+  padding:clamp(16px,4vw,48px) clamp(20px,5vw,64px) clamp(32px,6vw,72px);
+}
+.wrap{width:100%;max-width:1120px;margin:0 auto}
+
+.status{
+  display:inline-flex;align-items:center;gap:10px;
+  padding:8px 16px;border-radius:999px;
+  background:#fff;border:1px solid var(--line);
+  font-size:.85rem;font-weight:600;color:var(--blue-dark);
+  margin-bottom:28px;
+}
+.status i{
+  width:9px;height:9px;border-radius:50%;background:var(--green);
+  box-shadow:0 0 0 0 rgba(0,168,95,.5);
+  animation:pulse 2s infinite;
+}
+@keyframes pulse{
+  70%{box-shadow:0 0 0 9px rgba(0,168,95,0)}
+  100%{box-shadow:0 0 0 0 rgba(0,168,95,0)}
+}
+
+h1{
+  font-size:clamp(2.2rem,6vw,4.4rem);
+  line-height:1.06;
+  letter-spacing:-.02em;
+  font-weight:800;
+  color:var(--blue-dark);
+  max-width:15ch;
+}
+.lead{
+  margin-top:22px;
+  max-width:52ch;
+  font-size:clamp(1rem,1.5vw,1.15rem);
+  line-height:1.7;
+  color:var(--muted);
+}
+
+/* the one memorable element: a charge bar in the logo's tricolour */
+.charge{margin:44px 0 52px;max-width:640px}
+.charge-track{
+  position:relative;height:16px;border-radius:999px;
+  background:#fff;border:1px solid var(--line);overflow:hidden;
+}
+.charge-fill{
+  position:absolute;inset:0 auto 0 0;width:0;border-radius:999px;
+  background:linear-gradient(90deg,var(--saffron) 0 33.3%,#fff 33.3% 36%,var(--blue) 36% 66.6%,#fff 66.6% 69.3%,var(--green) 69.3% 100%);
+  animation:fill 2.6s cubic-bezier(.3,.7,.2,1) .3s forwards;
+}
+@keyframes fill{to{width:78%}}
+.charge-meta{
+  display:flex;justify-content:space-between;gap:12px;
+  margin-top:12px;font-size:.85rem;color:var(--muted);
+}
+.charge-meta strong{color:var(--blue-dark);font-weight:600}
+
+.contact{
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+  gap:16px;max-width:760px;
+}
+.card{
+  display:flex;align-items:center;gap:16px;
+  padding:20px 22px;border-radius:14px;
+  background:#fff;border:1px solid var(--line);
+  text-decoration:none;color:inherit;
+  transition:border-color .2s,transform .2s;
+}
+.card:hover{border-color:var(--blue);transform:translateY(-2px)}
+.card:focus-visible,.btn:focus-visible{outline:3px solid var(--blue);outline-offset:3px}
+.ico{
+  flex:none;width:46px;height:46px;border-radius:12px;
+  display:grid;place-items:center;background:#e8f1fb;color:var(--blue);
+}
+.ico svg{width:22px;height:22px}
+.card small{display:block;font-size:.8rem;color:var(--muted);margin-bottom:3px}
+.card span{font-size:1.02rem;font-weight:600;color:var(--blue-dark);word-break:break-word}
+
+.actions{margin-top:20px}
+.btn{
+  display:inline-flex;align-items:center;gap:10px;
+  padding:14px 24px;border-radius:999px;
+  background:#25d366;color:#05301a;font-weight:700;font-size:.95rem;
+  text-decoration:none;font-family:inherit;
+  transition:filter .2s;
+}
+.btn:hover{filter:brightness(.95)}
+.btn svg{width:20px;height:20px}
+
+footer{
+  padding:22px clamp(20px,5vw,64px);
+  border-top:1px solid var(--line);
+  background:#fff;
+  font-size:.82rem;color:var(--muted);
+  display:flex;flex-wrap:wrap;justify-content:space-between;gap:8px;
+}
+
+@media (max-width:560px){
+  header{padding-top:22px}
+  .logo svg{height:44px}
+  .card{padding:16px 18px}
+}
+@media (prefers-reduced-motion:reduce){
+  .charge-fill{animation:none;width:78%}
+  .status i{animation:none}
+  .card{transition:none}
+}
+</style>
+</head>
+<body>
+
+<header>
+  <!-- Logo is recreated as SVG. To use your exact PNG instead, replace this whole <svg> with:
+       <img src="logo.png" alt="Citabharat EV" height="52"> -->
+  <a class="logo" href="/" aria-label="Citabharat EV">
+    <svg viewBox="0 0 330 84" role="img" aria-label="Citabharat EV" xmlns="http://www.w3.org/2000/svg">
+      <text x="0" y="52" font-family="Sora,Arial,sans-serif" font-size="50" font-weight="800" letter-spacing="-1.5">
+        <tspan fill="#f7931e">Cita</tspan><tspan fill="#046bd2">bharat</tspan>
+      </text>
+      <rect x="0" y="66" width="86" height="6" rx="3" fill="#f7931e"/>
+      <rect x="90" y="66" width="86" height="6" rx="3" fill="#046bd2"/>
+      <rect x="180" y="66" width="86" height="6" rx="3" fill="#00a85f"/>
+      <rect x="276" y="14" width="54" height="54" rx="14" fill="#00a85f"/>
+      <text x="303" y="52" text-anchor="middle" font-family="Sora,Arial,sans-serif" font-size="34" font-weight="800" fill="#fff" letter-spacing="-1">ev</text>
+    </svg>
+  </a>
+</header>
+
+<main>
+  <div class="wrap">
+    <div class="status"><i aria-hidden="true"></i>Website under maintenance</div>
+
+    <h1>Our new website is charging up.</h1>
+    <p class="lead">
+      We are rebuilding Citabharat EV to make it easier to explore our EV chargers and get a quote.
+      We will be back online shortly. Until then, our team is available for any enquiry.
+    </p>
+
+    <div class="charge" role="img" aria-label="Website progress, about 78 percent">
+      <div class="charge-track"><div class="charge-fill"></div></div>
+      <div class="charge-meta"><strong>Charging in progress</strong><span>Back soon</span></div>
+    </div>
+
+    <div class="contact">
+      <a class="card" href="mailto:sales@citabharatev.com">
+        <div class="ico" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2.5"/><path d="M3.5 7l8.5 6 8.5-6"/></svg>
+        </div>
+        <div><small>Email us</small><span>sales@citabharatev.com</span></div>
+      </a>
+      <a class="card" href="tel:+917020404346">
+        <div class="ico" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 005 5L15 13l5 2v4a2 2 0 01-2 2A16 16 0 013 6a2 2 0 012-2z"/></svg>
+        </div>
+        <div><small>Call or WhatsApp</small><span>+91 70204 04346</span></div>
+      </a>
+    </div>
+
+    <div class="actions">
+      <a class="btn" target="_blank" rel="noopener"
+         href="https://api.whatsapp.com/send?phone=917020404346&text=Hi%20Citabharat%20EV%2C%20I%20would%20like%20to%20know%20more%20about%20your%20EV%20chargers.">
+        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.47 14.38c-.3-.15-1.76-.87-2.03-.97-.27-.1-.47-.15-.67.15-.2.3-.77.97-.94 1.16-.17.2-.35.22-.64.07-.3-.15-1.26-.46-2.39-1.48-.88-.79-1.48-1.76-1.65-2.06-.17-.3-.02-.46.13-.6.13-.13.3-.35.45-.52.15-.17.2-.3.3-.5.1-.2.05-.37-.03-.52-.07-.15-.67-1.61-.92-2.2-.24-.58-.49-.5-.67-.51h-.57c-.2 0-.52.07-.79.37-.27.3-1.04 1.02-1.04 2.48s1.07 2.88 1.21 3.07c.15.2 2.1 3.2 5.08 4.49.71.3 1.26.49 1.69.63.71.23 1.36.2 1.87.12.57-.09 1.76-.72 2-1.41.25-.7.25-1.29.17-1.41-.07-.13-.27-.2-.57-.35M12.05 21.8a9.87 9.87 0 01-5.03-1.38l-.36-.21-3.74.98 1-3.65-.24-.37a9.86 9.86 0 01-1.51-5.26c0-5.45 4.44-9.88 9.89-9.88 2.64 0 5.12 1.03 6.99 2.9a9.83 9.83 0 012.89 6.99c0 5.45-4.44 9.88-9.89 9.88M20.46 3.49A11.8 11.8 0 0012.05 0C5.5 0 .16 5.34.16 11.89c0 2.1.55 4.14 1.59 5.95L.06 24l6.3-1.65a11.9 11.9 0 005.69 1.45c6.55 0 11.89-5.34 11.89-11.89 0-3.18-1.24-6.17-3.48-8.42"/></svg>
+        Chat on WhatsApp
+      </a>
+    </div>
+  </div>
+</main>
+
+<footer>
+  <span>&copy; 2026 Citabharat EV. All rights reserved.</span>
+  <span>citabharatev.com</span>
+</footer>
+
+</body>
+</html>
