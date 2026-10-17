@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Dealer Registration Form – Citabharat EV</title>
+<style>
+:root{
+  --saffron:#E8730C; --blue:#1B3F8B; --green:#1E8E3E;
+  --ink:#1c2230; --muted:#5d6678; --line:#cfd5e0; --paper:#ffffff; --wash:#f5f7fb; --err:#c0262d;
+  --font:"Segoe UI","Noto Sans","Helvetica Neue",Arial,sans-serif;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--wash);color:var(--ink);font-family:var(--font);font-size:15px;line-height:1.5}
+.sheet{max-width:880px;margin:24px auto;background:var(--paper);border:1px solid var(--line);border-radius:6px;overflow:hidden}
+.bar{height:6px;background:linear-gradient(90deg,var(--saffron) 0 33.3%,var(--blue) 33.3% 66.6%,var(--green) 66.6%)}
+header.top{display:flex;justify-content:space-between;align-items:flex-end;gap:16px;padding:26px 36px 18px;border-bottom:1px solid var(--line);flex-wrap:wrap}
+.brand{font-size:30px;font-weight:700;letter-spacing:-.5px;line-height:1}
+.brand .c{color:var(--saffron)} .brand .b{color:var(--blue)}
+.brand .ev{display:inline-block;margin-left:6px;padding:2px 8px;border-radius:4px;background:var(--green);color:#fff;font-size:18px;letter-spacing:0;vertical-align:3px}
+.brand small{display:block;margin-top:8px;font-size:12.5px;font-weight:400;color:var(--muted);letter-spacing:0}
+.doc-title{text-align:right}
+.doc-title h1{margin:0;font-size:20px;font-weight:700;color:var(--blue)}
+.doc-title p{margin:2px 0 0;font-size:13px;color:var(--muted)}
+.actions{display:flex;gap:10px;flex-wrap:wrap;padding:14px 36px;background:var(--wash);border-bottom:1px solid var(--line);align-items:center}
+.actions p{margin:0;font-size:13px;color:var(--muted);flex:1 1 280px}
+button,.btn{font:inherit;font-weight:600;border-radius:5px;padding:9px 18px;cursor:pointer;border:1.5px solid var(--blue);background:#fff;color:var(--blue)}
+button:hover{background:#eef2fb}
+button.primary{background:var(--blue);color:#fff}
+button.primary:hover{background:#15326f}
+button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{outline:3px solid #f2b26b;outline-offset:1px}
+form{padding:6px 36px 32px}
+fieldset{border:0;margin:26px 0 0;padding:0;min-width:0}
+legend{padding:0;width:100%;font-size:17px;font-weight:700;color:var(--blue);border-bottom:2px solid var(--saffron);padding-bottom:6px;margin-bottom:16px}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:16px 22px}
+.full{grid-column:1/-1}
+.f label.l,.f .l{display:block;font-weight:600;font-size:13.5px;margin-bottom:5px}
+.req::after{content:" *";color:var(--err)}
+.hint{display:block;font-weight:400;color:var(--muted);font-size:12px}
+input[type=text],input[type=tel],input[type=email],input[type=url],input[type=number],input[type=date],select,textarea{
+  width:100%;font:inherit;padding:9px 11px;border:1px solid #aab3c5;border-radius:4px;background:#fff;color:var(--ink)}
+textarea{resize:vertical;min-height:72px}
+input:invalid:not(:placeholder-shown){border-color:var(--err)}
+.opts{display:flex;flex-wrap:wrap;gap:8px}
+.opts label{display:inline-flex;align-items:center;gap:7px;padding:7px 12px;border:1px solid #aab3c5;border-radius:4px;cursor:pointer;font-size:14px;background:#fff}
+.opts input{accent-color:var(--blue);width:16px;height:16px;margin:0}
+.opts label:has(input:checked){border-color:var(--blue);background:#eef2fb}
+.upload{border:1.5px dashed #aab3c5;border-radius:4px;padding:12px;background:var(--wash)}
+.stamp-print,.sign-print{display:none}
+.declare{display:flex;gap:10px;align-items:flex-start;padding:12px 14px;border:1px solid var(--line);border-radius:4px;background:var(--wash);font-size:14px}
+.declare input{margin-top:4px;width:17px;height:17px;accent-color:var(--blue);flex:none}
+.submit-row{display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin-top:22px}
+#msg{margin-top:14px;padding:12px 14px;border-radius:4px;font-size:14px;display:none}
+#msg.ok{display:block;background:#e8f5ec;border:1px solid #9fd2ae;color:#14532b}
+#msg.bad{display:block;background:#fdecec;border:1px solid #efb2b4;color:#7f1d1d}
+footer.foot{padding:14px 36px;border-top:1px solid var(--line);font-size:12.5px;color:var(--muted);display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.print-only{display:none}
+@media (max-width:640px){
+  .sheet{margin:0;border-radius:0;border-left:0;border-right:0}
+  header.top,.actions,form,footer.foot{padding-left:18px;padding-right:18px}
+  .doc-title{text-align:left}
+  .grid{grid-template-columns:1fr}
+}
+
+/* ---------- Print: a clean paper form people can hand-write on ---------- */
+@page{size:A4;margin:11mm}
+@media print{
+  body{background:#fff;font-size:10pt;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .sheet{margin:0;border:0;border-radius:0;max-width:none}
+  .actions,.submit-row,#msg,.upload,.no-print,footer.foot .no-print{display:none!important}
+  .print-only{display:block}
+  header.top{padding:4mm 0 3mm}
+  form{padding:0}
+  fieldset{margin-top:5mm;break-inside:avoid}
+  legend{font-size:11.5pt;margin-bottom:3mm}
+  .grid{gap:4mm 6mm}
+  .f label.l,.f .l{font-size:9pt;margin-bottom:0}
+  input[type=text],input[type=tel],input[type=email],input[type=url],input[type=number],input[type=date],select,textarea{
+    border:0;border-bottom:1px solid #444;border-radius:0;padding:5px 2px;min-height:8mm;background:transparent;appearance:none;-webkit-appearance:none}
+  textarea{min-height:16mm;border:1px solid #444;resize:none}
+  textarea.t2{min-height:12mm}
+  .opts{gap:3mm 5mm}
+  .opts label{border:0;padding:0;background:transparent!important;font-size:9.5pt}
+  .opts input{appearance:none;-webkit-appearance:none;width:3.4mm;height:3.4mm;border:1px solid #222;background:#fff;margin:0}
+  .opts input[type=radio]{border-radius:50%}
+  .opts input:checked{background:#222;box-shadow:inset 0 0 0 1px #fff}
+  .stamp-print,.sign-print{display:flex}
+  .stamp-print{gap:8mm;margin-top:3mm;break-inside:avoid}
+  .stamp-print .box{flex:1;height:34mm;border:1px dashed #444;padding:2mm;font-size:8.5pt;color:#444}
+  .declare{border:0;background:none;padding:0;font-size:9pt}
+  .declare input{appearance:none;-webkit-appearance:none;border:1px solid #222;width:3.4mm;height:3.4mm}
+  .office{display:block!important;margin-top:5mm;border:1px solid #444;padding:3mm;font-size:8.5pt;break-inside:avoid}
+  a{color:inherit;text-decoration:none}
+}
+.office{display:none}
+</style>
+</head>
+<body>
+<div class="sheet">
+  <div class="bar"></div>
+  <header class="top">
+    <div class="brand"><span class="c">Cita</span><span class="b">bharat</span><span class="ev">ev</span>
+      <small>EV charging solutions · citabharatev.com · sales@citabharatev.com</small>
+    </div>
+    <div class="doc-title">
+      <h1>Dealer Registration Form</h1>
+      <p>Please fill in your company details. Our team will contact you within 2 working days.</p>
+    </div>
+  </header>
+
+  <div class="actions no-print">
+    <p>Fill online and submit, or print this form, fill it by hand, stamp it and send us the scan or photo.</p>
+    <button type="button" id="btnPrint">Print form</button>
+  </div>
+
+  <form id="dealerForm" novalidate>
+
+    <fieldset>
+      <legend>1. Contact person</legend>
+      <div class="grid">
+        <div class="f"><label class="l req" for="full_name">Full name</label><input type="text" id="full_name" name="Full Name" required autocomplete="name"></div>
+        <div class="f"><label class="l req" for="designation">Designation</label><input type="text" id="designation" name="Designation" required></div>
+        <div class="f"><label class="l req" for="mobile">Mobile number</label><input type="tel" id="mobile" name="Mobile Number" required inputmode="numeric" maxlength="10" pattern="[0-9]{10}" placeholder=" " autocomplete="tel-national"><span class="hint no-print">10 digits, without +91</span></div>
+        <div class="f"><label class="l" for="alt_mobile">Alternate mobile / WhatsApp</label><input type="tel" id="alt_mobile" name="Alternate Mobile / WhatsApp" inputmode="numeric" maxlength="10" pattern="[0-9]{10}" placeholder=" "></div>
+        <div class="f full"><label class="l req" for="email">Organization email</label><input type="email" id="email" name="Organization Email" required placeholder=" " autocomplete="email"></div>
+      </div>
+    </fieldset>
+
+    <fieldset>
+      <legend>2. Company details</legend>
+      <div class="grid">
+        <div class="f"><label class="l req" for="company">Company name</label><input type="text" id="company" name="Company Name" required autocomplete="organization"></div>
+        <div class="f full"><span class="l req">Type of organization</span>
+          <div class="opts" data-type="radio" data-name="Type of Organization" data-opts="Proprietorship|Partnership|Pvt Ltd|LLP|Public Ltd|Other" data-req></div></div>
+        <div class="f full"><label class="l req" for="directors">Name of director(s) / proprietor / partners</label><textarea id="directors" name="Director(s) / Proprietor / Partners" class="t2" required></textarea></div>
+        <div class="f full"><label class="l req" for="address">Registered office address</label><textarea id="address" name="Registered Office Address" required autocomplete="street-address"></textarea></div>
+        <div class="f"><label class="l req" for="city">City</label><input type="text" id="city" name="City" required></div>
+        <div class="f"><label class="l req" for="state">State / UT</label><input type="text" id="state" name="State" list="states" required autocomplete="off"><datalist id="states"></datalist></div>
+        <div class="f"><label class="l req" for="pin">PIN code</label><input type="text" id="pin" name="PIN Code" required inputmode="numeric" maxlength="6" pattern="[0-9]{6}" placeholder=" "></div>
+        <div class="f"><label class="l" for="year">Year of establishment</label><input type="number" id="year" name="Year of Establishment" min="1900" max="2100" placeholder=" "></div>
+        <div class="f"><label class="l" for="website">Website</label><input type="url" id="website" name="Website" placeholder="https://" ></div>
+        <div class="f"><label class="l" for="social">Social media links<span class="hint">Instagram / Facebook / LinkedIn</span></label><input type="text" id="social" name="Social Media Links"></div>
+        <div class="f"><label class="l req" for="gst">GST number</label><input type="text" id="gst" name="GST Number" required maxlength="15" pattern="[0-9]{2}[A-Za-z]{5}[0-9]{4}[A-Za-z][1-9A-Za-z]Z[0-9A-Za-z]" style="text-transform:uppercase" placeholder=" "><span class="hint no-print">15 characters</span></div>
+        <div class="f"><label class="l" for="pan">PAN number</label><input type="text" id="pan" name="PAN Number" maxlength="10" pattern="[A-Za-z]{5}[0-9]{4}[A-Za-z]" style="text-transform:uppercase" placeholder=" "><span class="hint no-print">10 characters</span></div>
+        <div class="f full no-print"><label class="l" for="stamp">Company stamp / seal<span class="hint">Clear image or PDF, up to 10 MB. If you submit by email, attach this file to the email that opens.</span></label>
+          <div class="upload"><input type="file" id="stamp" name="Company Stamp" accept="image/*,.pdf"></div></div>
+      </div>
+    </fieldset>
+
+    <fieldset>
+      <legend>3. Business profile</legend>
+      <div class="grid">
+        <div class="f full"><label class="l req" for="business">Current business / products you deal in</label><textarea id="business" name="Current Business / Products" class="t2" required></textarea></div>
+        <div class="f full"><span class="l">Experience in EV / electrical / automotive</span>
+          <div class="opts" data-type="radio" data-name="Experience" data-opts="New|1–3 years|3–5 years|5–10 years|10+ years"></div></div>
+        <div class="f full"><span class="l">Number of staff</span>
+          <div class="opts" data-type="radio" data-name="Number of Staff" data-opts="1–5|6–20|21–50|50+"></div></div>
+        <div class="f full"><span class="l">Do you have a showroom / office / service centre?</span>
+          <div class="opts" data-type="radio" data-name="Premises" data-opts="Showroom|Office only|Service centre|None"></div></div>
+        <div class="f full"><label class="l req" for="territory">Area / territory you want to cover</label><input type="text" id="territory" name="Territory" required></div>
+      </div>
+    </fieldset>
+
+    <fieldset>
+      <legend>4. Charger requirement</legend>
+      <div class="grid">
+        <div class="f full"><span class="l req">Type of charger required</span>
+          <div class="opts" data-type="checkbox" data-name="Charger Type" data-opts="2W/3W AC charger|4W AC charger|DC fast charger|Not sure" data-req></div></div>
+        <div class="f full"><span class="l">Capacity required</span>
+          <div class="opts" data-type="checkbox" data-name="Capacity" data-opts="3.3 kW|7.4 kW|11 kW|30 kW|60 kW|120 kW+|Custom"></div></div>
+        <div class="f"><label class="l req" for="qty">Estimated quantity (first order)</label><input type="number" id="qty" name="First Order Quantity" min="1" required placeholder=" "></div>
+        <div class="f"><span class="l">Expected monthly requirement</span>
+          <div class="opts" data-type="radio" data-name="Monthly Requirement" data-opts="1–10|11–50|51–100|100+"></div></div>
+        <div class="f full"><span class="l req">Purpose</span>
+          <div class="opts" data-type="radio" data-name="Purpose" data-opts="Resale|Own installation|Both" data-req></div></div>
+        <div class="f full"><span class="l">Expected purchase timeline</span>
+          <div class="opts" data-type="radio" data-name="Timeline" data-opts="Immediately|Within 1 month|Within 3 months|Just exploring"></div></div>
+        <div class="f full"><label class="l" for="remarks">Additional requirements / remarks</label><textarea id="remarks" name="Remarks"></textarea></div>
+      </div>
+    </fieldset>
+
+    <fieldset>
+      <legend>5. Declaration</legend>
+      <div class="grid">
+        <div class="f full"><span class="l">How did you hear about us?</span>
+          <div class="opts" data-type="radio" data-name="Source" data-opts="Website|Social media|Reference|Exhibition|Other"></div></div>
+        <div class="f full"><label class="declare"><input type="checkbox" id="agree" name="Declaration" value="Confirmed" required>
+          <span>I confirm that the information above is correct and I agree to be contacted by the company.</span></label></div>
+      </div>
+      <div class="stamp-print">
+        <div class="box">Company stamp / seal</div>
+        <div class="box">Authorised signatory: name, signature and date</div>
+      </div>
+      <div class="office">For office use only &nbsp;·&nbsp; Received on: ____________ &nbsp; Dealer code: ____________ &nbsp; Verified by: ____________ &nbsp; Status: Approved / Pending / Rejected
+        <br><br>Printed forms: send a scan or clear photo to <strong>sales@citabharatev.com</strong></div>
+    </fieldset>
+
+    <div class="submit-row no-print">
+      <button type="submit" class="primary">Submit registration</button>
+      <button type="button" id="btnPrint2">Print form</button>
+      <button type="reset" id="btnReset">Clear form</button>
+    </div>
+    <div id="msg" role="status" aria-live="polite"></div>
+  </form>
+
+  <footer class="foot">
+    <span>Citabharat EV · sales@citabharatev.com</span>
+    <span class="no-print">Fields marked * are required.</span>
+  </footer>
+</div>
+
+<script>
+/* ---------------- SETTINGS ----------------
+   SUBMIT_URL: address of your own form-handling script on your server
+   (for example a PHP file that emails the data and saves it). Leave empty
+   to use the email fallback, which opens the visitor's email app with all
+   answers filled in, addressed to SALES_EMAIL. */
+var SUBMIT_URL  = "";
+var SALES_EMAIL = "sales@citabharatev.com";
+
+/* States and UTs */
+["Andaman and Nicobar Islands","Andhra Pradesh","Arunachal Pradesh","Assam","Bihar","Chandigarh","Chhattisgarh","Dadra and Nagar Haveli and Daman and Diu","Delhi","Goa","Gujarat","Haryana","Himachal Pradesh","Jammu and Kashmir","Jharkhand","Karnataka","Kerala","Ladakh","Lakshadweep","Madhya Pradesh","Maharashtra","Manipur","Meghalaya","Mizoram","Nagaland","Odisha","Puducherry","Punjab","Rajasthan","Sikkim","Tamil Nadu","Telangana","Tripura","Uttar Pradesh","Uttarakhand","West Bengal"]
+  .forEach(function(s){var o=document.createElement("option");o.value=s;document.getElementById("states").appendChild(o);});
+
+/* Build radio / checkbox groups */
+document.querySelectorAll(".opts").forEach(function(box,gi){
+  var type=box.dataset.type, name=box.dataset.name, req=box.hasAttribute("data-req");
+  box.dataset.group=name;
+  box.dataset.req=req?"1":"";
+  box.dataset.type=type;
+  box.dataset.opts.split("|").forEach(function(t,i){
+    var l=document.createElement("label"), inp=document.createElement("input");
+    inp.type=type; inp.name=name; inp.value=t;
+    l.appendChild(inp); l.appendChild(document.createTextNode(t)); box.appendChild(l);
+  });
+});
+
+["btnPrint","btnPrint2"].forEach(function(id){document.getElementById(id).addEventListener("click",function(){window.print();});});
+
+var form=document.getElementById("dealerForm"), msg=document.getElementById("msg");
+function show(cls,text){msg.className=cls;msg.textContent=text;msg.scrollIntoView({behavior:"smooth",block:"center"});}
+
+function groupsOk(){
+  var ok=true;
+  document.querySelectorAll('.opts[data-req="1"]').forEach(function(b){
+    if(!b.querySelector("input:checked")){ ok=false; if(ok===false && !groupsOk.first){groupsOk.first=b;} }
+  });
+  return ok;
+}
+
+form.addEventListener("submit",function(e){
+  e.preventDefault(); groupsOk.first=null; msg.className="";
+  if(!form.checkValidity()){ form.reportValidity(); return; }
+  if(!groupsOk()){
+    show("bad","Please choose an option for every question marked *.");
+    if(groupsOk.first) groupsOk.first.scrollIntoView({block:"center"});
+    return;
+  }
+  var fd=new FormData(form);
+  fd.set("GST Number",(fd.get("GST Number")||"").toUpperCase());
+  fd.set("PAN Number",(fd.get("PAN Number")||"").toUpperCase());
+
+  if(SUBMIT_URL){
+    var btn=form.querySelector("button.primary"); btn.disabled=true; btn.textContent="Submitting…";
+    fetch(SUBMIT_URL,{method:"POST",body:fd}).then(function(r){
+      if(!r.ok) throw new Error(r.status);
+      show("ok","Thank you. Your registration has been received. Our team will contact you within 2 working days.");
+      form.reset();
+    }).catch(function(){
+      show("bad","We could not submit the form right now. Please try again, or print the form and email it to "+SALES_EMAIL+".");
+    }).finally(function(){btn.disabled=false;btn.textContent="Submit registration";});
+    return;
+  }
+
+  /* Email fallback */
+  var lines=["DEALER REGISTRATION – Citabharat EV",""], groups={};
+  fd.forEach(function(v,k){
+    if(v instanceof File) return;
+    if(!v) return;
+    groups[k]=groups[k]?groups[k]+", "+v:v;
+  });
+  Object.keys(groups).forEach(function(k){ if(k!=="Declaration") lines.push(k+": "+groups[k]); });
+  lines.push("","Declaration: Information confirmed by applicant");
+  var f=document.getElementById("stamp").files[0];
+  lines.push("Company stamp: "+(f?"attached separately ("+f.name+")":"to be sent separately"));
+  var subject="Dealer Registration – "+(fd.get("Company Name")||"");
+  window.location.href="mailto:"+SALES_EMAIL+"?subject="+encodeURIComponent(subject)+"&body="+encodeURIComponent(lines.join("\n"));
+  show("ok","Your email app should now open with the details filled in. Attach your company stamp file if you have one, then press Send. If nothing opened, print this form and email the scan to "+SALES_EMAIL+".");
+});
+form.addEventListener("reset",function(){msg.className="";});
+</script>
+</body>
+</html>
