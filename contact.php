@@ -1,4 +1,11 @@
 <?php
+const TO = 'sales@citabharatev.com';
+const FROM = 'sales@citabharatev.com';
+
+const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzFTA5KHPbvgEGVJePsFSabFn8zd1f4K_2qZIPUHrJH7aiZv0qco2ysB0iXQROZmEx3/exec';
+
+const LIMIT = 5;
+const WINDOW = 3600;
 /* Citabharat EV contact handler: CSRF, honeypot, rate limit, validation, email. */
 session_set_cookie_params(['httponly'=>true,'secure'=>!empty($_SERVER['HTTPS']),'samesite'=>'Strict']);
 session_start();
