@@ -1,4 +1,3 @@
-```html
 <!DOCTYPE html>
 <html lang="en-IN">
 
@@ -1108,70 +1107,3 @@ document.addEventListener('DOMContentLoaded', async function () {
 
 </body>
 </html>
-```
-
-### Important: one small requirement
-
-Because this version keeps your existing CSRF protection, you need these **three files together**:
-
-```text
-contact.html
-contact.php
-csrf.php
-```
-
-And `csrf.php` should be:
-
-```php
-<?php
-
-session_set_cookie_params([
-    'httponly' => true,
-    'secure' => !empty($_SERVER['HTTPS']),
-    'samesite' => 'Strict'
-]);
-
-session_start();
-
-header('Content-Type: application/json');
-header('Cache-Control: no-store');
-
-if (empty($_SESSION['csrf'])) {
-    $_SESSION['csrf'] = bin2hex(random_bytes(32));
-}
-
-echo json_encode([
-    'ok' => true,
-    'csrf' => $_SESSION['csrf']
-]);
-```
-
-### Also check this
-
-Your `app.js` should **not have another form submission handler that sends the form somewhere else**. If it already handles `#cform`, it may interfere with this setup.
-
-The corrected page now loads:
-
-```text
-boot.js     → once
-app.js      → once
-csrf.php    → only when page loads
-contact.php → when form submits
-```
-
-So your deployment is simply:
-
-```text
-/public_html/
-│
-├── contact.html
-├── contact.php
-├── csrf.php
-├── app.js
-├── boot.js
-├── style.css
-├── logo.png
-└── ...
-```
-
-**Do not add the Google Apps Script URL anywhere in `contact.html`.** It is already correctly placed inside `contact.php`, which is the right approach.
